@@ -15,68 +15,95 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
      color:var(--fg);line-height:1.5;background:transparent;
      position:relative;min-height:100vh;overflow-x:hidden;}
 
-/* ── Volcano silhouette (background, behind all content) ────────────── */
-.volcano-body{
-  position:fixed;left:0;right:0;bottom:0;height:75vh;
-  background:linear-gradient(180deg,#2a3040 0%,#1a1f2e 55%,#080c14 100%);
-  clip-path:polygon(0% 100%, 0% 92%, 30% 50%, 44% 28%, 50% 22%, 56% 28%, 70% 50%, 100% 92%, 100% 100%);
-  pointer-events:none;z-index:0;opacity:0.6;
+/* ── Ghost volcano — full scene from rover_mockup, atmospheric ──
+   Wrapper sets opacity + blur so the entire composition reads as
+   out-of-focus backdrop. Public-page tuning: opacity lower than
+   original mockup since this is supporting brand, not foreground. */
+.ghost-volcano{
+  position:fixed;left:0;right:0;bottom:0;top:0;
+  pointer-events:none;z-index:0;overflow:hidden;
+  opacity:0.32;
+  filter:blur(5px);
 }
-
-/* ── Plume rising from crater ───────────────────────────────────────── */
+.volcano-body{
+  position:absolute;left:0;right:0;bottom:0;height:75vh;
+  background:linear-gradient(180deg,#3a3540 0%,#252028 50%,#0d0d12 100%);
+  clip-path:polygon(0% 100%,0% 92%,35% 45%,46% 28%,54% 28%,65% 45%,100% 92%,100% 100%);
+}
 .volcano-plume{
-  position:fixed;left:50%;bottom:54vh;
-  width:90px;height:32vh;
+  position:absolute;left:50%;bottom:54vh;
+  width:110px;height:38vh;
   transform:translateX(-50%);
   background:linear-gradient(0deg,
-    rgba(255,140,52,0.7) 0%,
-    rgba(255,110,40,0.42) 22%,
-    rgba(184,88,32,0.22) 48%,
-    rgba(120,55,20,0.08) 75%,
+    rgba(255,140,52,1) 0%,
+    rgba(255,110,40,0.75) 20%,
+    rgba(184,88,32,0.45) 45%,
+    rgba(120,55,20,0.15) 75%,
     rgba(58,30,16,0) 100%);
   border-radius:50% 50% 30% 30% / 70% 70% 40% 40%;
-  pointer-events:none;z-index:0;
-  filter:blur(7px);
+  animation:plume 8s ease-in-out infinite;
+  transform-origin:50% 100%;
 }
-
-/* ── Crater glow (the hot apex) ─────────────────────────────────────── */
 .volcano-crater-glow{
-  position:fixed;left:50%;bottom:54vh;
-  transform:translate(-50%,40%);
-  width:140px;height:26px;
+  position:absolute;left:50%;bottom:54vh;
+  transform:translate(-50%,50%);
+  width:120px;height:24px;
   background:radial-gradient(ellipse at 50% 50%,
-    rgba(255,180,70,0.9) 0%,
-    rgba(255,120,40,0.55) 35%,
-    rgba(184,80,28,0.18) 70%,
+    rgba(255,160,60,0.95) 0%,
+    rgba(255,110,40,0.6) 35%,
+    rgba(184,88,32,0.2) 70%,
     transparent 90%);
-  pointer-events:none;z-index:0;
-  filter:blur(2px);
 }
-
-/* ── Lava rivers (asymmetric flow down slopes) ──────────────────────── */
+@keyframes plume{
+  0%,100%{opacity:0.65;transform:translateX(-50%) translateY(0) scale(1)}
+  50%{opacity:1;transform:translateX(-50%) translateY(-12px) scale(1.06)}
+}
 .lava-rivers{
-  position:fixed;top:46vh;left:50%;
+  position:absolute;top:46vh;left:50%;
   transform:translateX(-50%);
-  width:64vw;height:46vh;
-  pointer-events:none;z-index:0;
+  width:60vw;height:42vh;
+  pointer-events:none;
 }
 .lava-rivers svg{width:100%;height:100%;display:block;overflow:visible;}
-.lava-river{
-  fill:none;stroke:#ff6820;stroke-width:2.6;stroke-linecap:round;
-  filter:drop-shadow(0 0 5px rgba(255,90,30,0.75)) drop-shadow(0 0 12px rgba(220,40,12,0.5));
-  opacity:0.8;
+@keyframes lava-shimmer{
+  0%,100%{opacity:1}
+  50%{opacity:0.65}
 }
-.lava-river-2{stroke:#ff7e3a;opacity:0.7;stroke-width:2.2;}
-.lava-river-3{stroke:#ff5818;opacity:0.65;stroke-width:1.8;}
+.lava-river{animation:lava-shimmer 5s ease-in-out infinite}
+.lava-river-2{animation-delay:-2.2s;animation-duration:7s}
+.lava-river-3{animation-delay:-3.1s;animation-duration:4.5s}
 
-/* Faint ambient magma glow at the base */
-.volcano-base-glow{
-  position:fixed;bottom:0;left:0;right:0;height:240px;
+/* Faint magma glow at the base */
+.base-magma-glow{
+  position:fixed;bottom:0;left:0;right:0;height:200px;
   background:radial-gradient(ellipse at 50% 100%,
-    rgba(255,126,46,0.10) 0%,
-    rgba(220,40,12,0.04) 35%,
-    transparent 70%);
+    rgba(255,126,46,0.06) 0%,transparent 70%);
   pointer-events:none;z-index:0;
+}
+
+/* ── Candlestick chart overlay — eruption made literal.
+   Toned down for public page (opacity 0.45) so it reads as
+   atmospheric backdrop demonstrating "this is what an eruption
+   looks like" without dominating the actual content. */
+.chart-overlay{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:0.45;
+}
+.chart-overlay svg{
+  width:100%;height:100%;display:block;overflow:visible;
+}
+.candle-bull{fill:#22c55e;stroke:#0a3d1f;stroke-width:1.2}
+.candle-bear{fill:#ef4444;stroke:#5a1414;stroke-width:1.2}
+.wick-bull{stroke:#22c55e;stroke-width:2.2}
+.wick-bear{stroke:#ef4444;stroke-width:2.2}
+.candle-hot{filter:drop-shadow(0 0 5px rgba(255,90,30,0.55));}
+.wick-hot{filter:drop-shadow(0 0 4px rgba(255,90,30,0.55));}
+.apex-flash{
+  fill:#fff5d8;opacity:0;
+  filter:drop-shadow(0 0 10px rgba(255,255,255,0.9))
+         drop-shadow(0 0 24px rgba(255,90,30,0.7));
 }
 
 /* Make sure all real content sits above the volcano */
@@ -182,7 +209,7 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
     <span class=tag>TickSense · Live Telemetry</span>
   </div>
-  <div class=gen style="background:#ff6820;color:#000;padding:6px 12px;border-radius:3px;display:inline-block;font-weight:700;">PUSHED 08:42:46 UTC · if you see this orange banner, the deploy is live</div>
+  <div class=gen>Generated 2026-05-05 08:48:02 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
 </header>
 <nav><a href="index.html" class="active">live</a><a href="last24h.html" class="">last 24h</a><a href="references.html" class="">reference cases</a></nav>
 
@@ -203,7 +230,7 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
     <div class=card>
       <div class=label>Total events</div>
-      <div class=val>16,396</div>
+      <div class=val>15,419</div>
       <div class=sub>telemetry state changes monitored</div>
     </div>
   </div>
