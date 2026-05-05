@@ -10,8 +10,39 @@
   --line:#1a2233; --card:#0c1018;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
-     background:var(--bg);color:var(--fg);line-height:1.5;}
+     color:var(--fg);line-height:1.5;background:transparent;
+     position:relative;min-height:100vh;}
+/* Ghost volcano in the background — reinforces the metaphor without
+   dominating. Subtle silhouette, faint plume glow. Sits behind all content. */
+body::before{
+  content:"";position:fixed;left:0;right:0;bottom:0;height:75vh;
+  background:linear-gradient(180deg,
+    rgba(30,40,55,0) 0%,
+    rgba(30,40,55,0.18) 30%,
+    rgba(20,28,40,0.30) 65%,
+    rgba(8,12,20,0.42) 100%);
+  clip-path:polygon(0% 100%, 0% 92%, 30% 50%, 44% 28%, 50% 22%, 56% 28%, 70% 50%, 100% 92%, 100% 100%);
+  pointer-events:none;
+  z-index:0;
+  filter:blur(2px);
+}
+/* Subtle warm magma glow at the crater */
+body::after{
+  content:"";position:fixed;left:50%;bottom:54vh;
+  transform:translate(-50%,50%);
+  width:160px;height:32px;
+  background:radial-gradient(ellipse at 50% 50%,
+    rgba(255,140,52,0.08) 0%,
+    rgba(255,90,30,0.04) 40%,
+    transparent 75%);
+  pointer-events:none;
+  z-index:0;
+  filter:blur(3px);
+}
+/* Make sure all real content sits above the ghost volcano */
+header,nav,section,footer{position:relative;z-index:1;}
 header{padding:32px 40px;border-bottom:1px solid var(--line);
        background:linear-gradient(180deg,#0a0a10 0%,#06060a 100%);}
 header .brand{display:flex;align-items:center;gap:18px;}
@@ -96,7 +127,7 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
     <span class=tag>TickSense · Live Telemetry</span>
   </div>
-  <div class=gen>Generated 2026-05-05 08:00:51 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
+  <div class=gen>Generated 2026-05-05 08:05:11 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
 </header>
 <nav><a href="index.html" class="">live</a><a href="last24h.html" class="">last 24h</a><a href="references.html" class="active">reference cases</a></nav>
 
