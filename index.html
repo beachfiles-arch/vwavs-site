@@ -5,7 +5,7 @@
 <title>VWAVS · TickSense</title>
 <style>
 :root{
-  --bg:#06060a; --fg:#cdd6e3; --muted:#5b6677;
+  --bg:#0a0e14; --fg:#cdd6e3; --muted:#5b6677;
   --accent:#22c55e; --warm:#ff6820; --cool:#7090c8;
   --line:#1a2233; --card:#0c1018;
 }
@@ -22,8 +22,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
 .ghost-volcano{
   position:fixed;left:0;right:0;bottom:0;top:0;
   pointer-events:none;z-index:0;overflow:hidden;
-  opacity:0.32;
-  filter:blur(5px);
+  opacity:0.55;
+  filter:blur(3px);
 }
 .volcano-body{
   position:absolute;left:0;right:0;bottom:0;height:75vh;
@@ -174,11 +174,11 @@ footer a{color:var(--accent);text-decoration:none;}
     <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="lavaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"   stop-color="#ffb450" stop-opacity="1"/>
-          <stop offset="20%"  stop-color="#ff7028" stop-opacity="0.95"/>
-          <stop offset="50%"  stop-color="#dc501e" stop-opacity="0.6"/>
-          <stop offset="80%"  stop-color="#8c3714" stop-opacity="0.2"/>
-          <stop offset="100%" stop-color="#3a1e10" stop-opacity="0"/>
+          <stop offset="0%"   stop-color="#ffd070" stop-opacity="1"/>
+          <stop offset="25%"  stop-color="#ff8a30" stop-opacity="1"/>
+          <stop offset="55%"  stop-color="#ff5818" stop-opacity="0.85"/>
+          <stop offset="85%"  stop-color="#c83012" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#7a200c" stop-opacity="0.25"/>
         </linearGradient>
       </defs>
       <!-- Dominant main flow — breaches west side of crater, fans far left. -->
@@ -234,7 +234,7 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
     <span class=tag>TickSense · Live Telemetry</span>
   </div>
-  <div class=gen>Generated 2026-05-05 08:49:29 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
+  <div class=gen>Generated 2026-05-05 08:53:20 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
 </header>
 <nav><a href="index.html" class="active">live</a><a href="last24h.html" class="">last 24h</a><a href="references.html" class="">reference cases</a></nav>
 
@@ -255,7 +255,7 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
     <div class=card>
       <div class=label>Total events</div>
-      <div class=val>15,080</div>
+      <div class=val>14,855</div>
       <div class=sub>telemetry state changes monitored</div>
     </div>
   </div>
