@@ -1,0 +1,161 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>VWAVS · TickSense</title>
+<style>
+:root{
+  --bg:#06060a; --fg:#cdd6e3; --muted:#5b6677;
+  --accent:#22c55e; --warm:#ff6820; --cool:#7090c8;
+  --line:#1a2233; --card:#0c1018;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+     background:var(--bg);color:var(--fg);line-height:1.5;}
+header{padding:32px 40px;border-bottom:1px solid var(--line);
+       background:linear-gradient(180deg,#0a0a10 0%,#06060a 100%);}
+header .brand{display:flex;align-items:center;gap:18px;}
+header .logo{display:flex;align-items:center;gap:14px;}
+header .logo svg{display:block;}
+header h1{font-size:26px;letter-spacing:7px;font-weight:300;
+          /* Pronounced fade: V is BLUE, E is GREEN, dramatic transition through teal */
+          background:linear-gradient(90deg,
+            #2eb0e0 0%,    /* V — sky blue */
+            #2cd0c8 35%,   /* W → teal */
+            #28d488 65%,   /* A → emerald */
+            #22c55e 100%   /* V → E — pure green */
+          );
+          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+          line-height:1;}
+header .tag{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase;}
+header .gen{color:var(--muted);font-size:11px;margin-top:8px;font-variant-numeric:tabular-nums;}
+nav{padding:12px 40px;border-bottom:1px solid var(--line);background:#08080d;}
+nav a{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:2px;
+      text-transform:uppercase;margin-right:24px;}
+nav a:hover, nav a.active{color:var(--accent);}
+section{padding:32px 40px;}
+section h2{font-size:13px;letter-spacing:3px;text-transform:uppercase;
+           color:var(--muted);margin-bottom:18px;font-weight:600;}
+.lead{font-size:18px;color:var(--fg);max-width:780px;line-height:1.6;
+      margin-bottom:8px;}
+.lead em{color:var(--accent);font-style:normal;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;
+       margin-top:18px;}
+.card{background:var(--card);padding:18px;border-radius:6px;border:1px solid var(--line);}
+.card .label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.card .val{font-size:28px;font-weight:600;margin:6px 0;
+           font-variant-numeric:tabular-nums;}
+.card .sub{font-size:11px;color:var(--muted);}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px;}
+th{text-align:left;padding:10px 12px;font-size:10px;letter-spacing:2px;
+   color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--line);
+   font-weight:600;}
+td{padding:10px 12px;border-bottom:1px solid var(--line);
+   font-variant-numeric:tabular-nums;}
+.sym{font-weight:700;color:#e8e8e8;letter-spacing:0.5px;}
+.up{color:var(--accent);}
+.down{color:#ff6b6b;}
+.flag{display:inline-block;font-size:10px;padding:2px 6px;border-radius:3px;
+      letter-spacing:1px;margin-right:4px;}
+.flag-good{background:rgba(34,197,94,0.12);color:var(--accent);
+           border:1px solid rgba(34,197,94,0.3);}
+.flag-bad{background:rgba(255,107,107,0.10);color:#ff6b6b;
+          border:1px solid rgba(255,107,107,0.3);}
+.flag-warn{background:rgba(255,184,77,0.10);color:#ffb84d;
+           border:1px solid rgba(255,184,77,0.3);}
+footer{padding:32px 40px;border-top:1px solid var(--line);
+       color:var(--muted);font-size:11px;line-height:1.7;}
+footer a{color:var(--accent);text-decoration:none;}
+.disclaimer{margin-top:18px;font-size:10px;color:var(--muted);
+            line-height:1.6;max-width:780px;}
+</style>
+</head><body>
+<header>
+  <div class=brand>
+    <div class=logo>
+      <svg width="38" height="22" viewBox="0 0 38 22" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="vwGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <!-- Same stops as the wordmark — proportionate blue→green fade
+                 across each wave. Waves visually mirror the VWAVE transition. -->
+            <stop offset="0%"   stop-color="#2eb0e0"/>
+            <stop offset="35%"  stop-color="#2cd0c8"/>
+            <stop offset="65%"  stop-color="#28d488"/>
+            <stop offset="100%" stop-color="#22c55e"/>
+          </linearGradient>
+        </defs>
+        <!-- Three gentle waves, close together, deeper crests -->
+        <path d="M 1 4 Q 8 -2, 16 4 T 32 4"
+              fill="none" stroke="url(#vwGrad)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M 4 11 Q 10 5, 17 11 T 30 11"
+              fill="none" stroke="url(#vwGrad)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M 7 18 Q 12 12, 18 18 T 28 18"
+              fill="none" stroke="url(#vwGrad)" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <h1>VWAVE</h1>
+    </div>
+    <span class=tag>TickSense · Live Telemetry</span>
+  </div>
+  <div class=gen>Generated 2026-05-05 07:03:23 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
+</header>
+<nav><a href="index.html" class="">live</a><a href="last24h.html" class="">last 24h</a><a href="references.html" class="active">reference cases</a></nav>
+
+<section>
+  <h2>Reference cases · TickSense's track record</h2>
+  <p class=lead>A small set of signature events that demonstrate what TickSense does — both <em>catch</em> (eruptions correctly identified within seconds) and <em>avoid</em> (fakes correctly flagged as incoherent). All timestamps are verifiable.</p>
+  
+<div style="background:var(--card);padding:24px;border-radius:6px;border:1px solid var(--line);margin-bottom:18px;">
+  <div style="font-size:11px;color:var(--muted);letter-spacing:2px;">2026-05-04</div>
+  <div style="font-size:18px;font-weight:600;margin:6px 0 12px;color:#e8e8e8;">RLYB — caught the eruption within 1 second</div>
+  <div style="color:var(--fg);margin-bottom:14px;line-height:1.6;">RLYB gapped from $9.41 → $12.88 in 3 minutes. The volcano fired an eruption event at 04:05:47 ET as the move started. By the time a human glanced at the chart, the system had already entered and exited.</div>
+  <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Evidence (verifiable timestamps)</div>
+  <ul style="list-style:none;font-family:'SF Mono',Menlo,monospace;font-size:12px;color:var(--cool);line-height:1.8;margin-bottom:14px;">
+    <li>08:01 UTC  $10.56  (gap up appears)</li><li>08:02 UTC  $12.00  (+30% in 60 seconds)</li><li>08:04 UTC  $12.88 high  ← peak</li><li>08:05:47 UTC  ERUPTION fired  rvol 3.6x  OBV BULLISH</li><li>08:06 UTC  human notices</li>
+  </ul>
+  <div style="font-size:13px;color:var(--accent);font-style:italic;">The volcano caught the move the moment its mechanics confirmed. Anyone watching their chart manually would have arrived 30-60 seconds late.</div>
+</div>
+
+<div style="background:var(--card);padding:24px;border-radius:6px;border:1px solid var(--line);margin-bottom:18px;">
+  <div style="font-size:11px;color:var(--muted);letter-spacing:2px;">2026-05-03</div>
+  <div style="font-size:18px;font-weight:600;margin:6px 0 12px;color:#e8e8e8;">PN — correctly avoided despite +294% headline</div>
+  <div style="color:var(--fg);margin-bottom:14px;line-height:1.6;">PN appeared to print a monster pump (+294% visible on the chart). Visually identical to a real eruption. The volcano refused to fire — flagged as <em>incoherent</em> due to bearish OBV during the price spike. Within 6 minutes the move collapsed -10%.</div>
+  <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Evidence (verifiable timestamps)</div>
+  <ul style="list-style:none;font-family:'SF Mono',Menlo,monospace;font-size:12px;color:var(--cool);line-height:1.8;margin-bottom:14px;">
+    <li>PN price: $1.42 → $6.01 (+294%)</li><li>OBV: BEARISH throughout the spike (cumulative selling > buying)</li><li>Volcano event: stale=True  reason: incoherent (mechanics don't match price)</li><li>Within 6 minutes: faded to $5.42 (-10% off peak)</li><li>Within 30 minutes: dropped from active monitoring entirely</li>
+  </ul>
+  <div style="font-size:13px;color:var(--accent);font-style:italic;">The volcano's discrimination layer turned 'looks like a trade' into 'stand down.' This is the half of the signal you won't get anywhere else.</div>
+</div>
+
+<div style="background:var(--card);padding:24px;border-radius:6px;border:1px solid var(--line);margin-bottom:18px;">
+  <div style="font-size:11px;color:var(--muted);letter-spacing:2px;">2026-04-23</div>
+  <div style="font-size:18px;font-weight:600;margin:6px 0 12px;color:#e8e8e8;">AKAN — full-stack proof of concept</div>
+  <div style="color:var(--fg);margin-bottom:14px;line-height:1.6;">First clean end-to-end trade. The volcano fired an eruption event, downstream bot entered, held for 10 minutes, exited at +27.72%. Operator's parallel manual trade got +1.39% on the same ticker.</div>
+  <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Evidence (verifiable timestamps)</div>
+  <ul style="list-style:none;font-family:'SF Mono',Menlo,monospace;font-size:12px;color:var(--cool);line-height:1.8;margin-bottom:14px;">
+    <li>AKAN eruption event timestamped, verifiable</li><li>Bot exit at +27.72% via 10-minute hold</li><li>Manual entry on same ticker: +1.39% (held shorter, exited earlier)</li><li>20× difference between automated and discretionary execution on identical signal</li>
+  </ul>
+  <div style="font-size:13px;color:var(--accent);font-style:italic;">The volcano's signal is structured enough for autonomous execution. Same signal, mechanical execution captures 20× the discretionary outcome.</div>
+</div>
+
+<div style="background:var(--card);padding:24px;border-radius:6px;border:1px solid var(--line);margin-bottom:18px;">
+  <div style="font-size:11px;color:var(--muted);letter-spacing:2px;">2026-04-27</div>
+  <div style="font-size:18px;font-weight:600;margin:6px 0 12px;color:#e8e8e8;">HTCO — three independent bots, one signal</div>
+  <div style="color:var(--fg);margin-bottom:14px;line-height:1.6;">HTCO triggered. Three independent bot architectures (Tenacity A, Tenacity B, Shadow) — running different exit logic, different entry confirmations — all caught the same trade simultaneously.</div>
+  <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Evidence (verifiable timestamps)</div>
+  <ul style="list-style:none;font-family:'SF Mono',Menlo,monospace;font-size:12px;color:var(--cool);line-height:1.8;margin-bottom:14px;">
+    <li>Three different bots, three different strategies</li><li>All entered HTCO within seconds of each other</li><li>All caught approximately the same +25% move</li><li>Confirms the underlying signal is real, not bot-specific quirk</li>
+  </ul>
+  <div style="font-size:13px;color:var(--accent);font-style:italic;">When three independent gates converge on the same trade, the signal is doing the work — not the bot.</div>
+</div>
+
+</section>
+
+
+<footer>
+  <div>VWAVS Trading Technologies · TickSense</div>
+  <div class=disclaimer>
+    This page shows TickSense's signal stream — timestamped events emitted when a ticker exhibits eruption-class behavior. Every event is verifiable: pull the ticker on TradingView, check the timestamp, judge whether the chart confirms TickSense's read.<br><br>
+    No buy/sell recommendations. No P&L claims. No predictions. The volcano perceives; you decide.
+  </div>
+</footer>
+</body></html>

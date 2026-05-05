@@ -1,0 +1,128 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>VWAVS · TickSense</title>
+<style>
+:root{
+  --bg:#06060a; --fg:#cdd6e3; --muted:#5b6677;
+  --accent:#22c55e; --warm:#ff6820; --cool:#7090c8;
+  --line:#1a2233; --card:#0c1018;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+     background:var(--bg);color:var(--fg);line-height:1.5;}
+header{padding:32px 40px;border-bottom:1px solid var(--line);
+       background:linear-gradient(180deg,#0a0a10 0%,#06060a 100%);}
+header .brand{display:flex;align-items:center;gap:18px;}
+header .logo{display:flex;align-items:center;gap:14px;}
+header .logo svg{display:block;}
+header h1{font-size:26px;letter-spacing:7px;font-weight:300;
+          /* Pronounced fade: V is BLUE, E is GREEN, dramatic transition through teal */
+          background:linear-gradient(90deg,
+            #2eb0e0 0%,    /* V — sky blue */
+            #2cd0c8 35%,   /* W → teal */
+            #28d488 65%,   /* A → emerald */
+            #22c55e 100%   /* V → E — pure green */
+          );
+          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+          line-height:1;}
+header .tag{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase;}
+header .gen{color:var(--muted);font-size:11px;margin-top:8px;font-variant-numeric:tabular-nums;}
+nav{padding:12px 40px;border-bottom:1px solid var(--line);background:#08080d;}
+nav a{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:2px;
+      text-transform:uppercase;margin-right:24px;}
+nav a:hover, nav a.active{color:var(--accent);}
+section{padding:32px 40px;}
+section h2{font-size:13px;letter-spacing:3px;text-transform:uppercase;
+           color:var(--muted);margin-bottom:18px;font-weight:600;}
+.lead{font-size:18px;color:var(--fg);max-width:780px;line-height:1.6;
+      margin-bottom:8px;}
+.lead em{color:var(--accent);font-style:normal;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;
+       margin-top:18px;}
+.card{background:var(--card);padding:18px;border-radius:6px;border:1px solid var(--line);}
+.card .label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.card .val{font-size:28px;font-weight:600;margin:6px 0;
+           font-variant-numeric:tabular-nums;}
+.card .sub{font-size:11px;color:var(--muted);}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px;}
+th{text-align:left;padding:10px 12px;font-size:10px;letter-spacing:2px;
+   color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--line);
+   font-weight:600;}
+td{padding:10px 12px;border-bottom:1px solid var(--line);
+   font-variant-numeric:tabular-nums;}
+.sym{font-weight:700;color:#e8e8e8;letter-spacing:0.5px;}
+.up{color:var(--accent);}
+.down{color:#ff6b6b;}
+.flag{display:inline-block;font-size:10px;padding:2px 6px;border-radius:3px;
+      letter-spacing:1px;margin-right:4px;}
+.flag-good{background:rgba(34,197,94,0.12);color:var(--accent);
+           border:1px solid rgba(34,197,94,0.3);}
+.flag-bad{background:rgba(255,107,107,0.10);color:#ff6b6b;
+          border:1px solid rgba(255,107,107,0.3);}
+.flag-warn{background:rgba(255,184,77,0.10);color:#ffb84d;
+           border:1px solid rgba(255,184,77,0.3);}
+footer{padding:32px 40px;border-top:1px solid var(--line);
+       color:var(--muted);font-size:11px;line-height:1.7;}
+footer a{color:var(--accent);text-decoration:none;}
+.disclaimer{margin-top:18px;font-size:10px;color:var(--muted);
+            line-height:1.6;max-width:780px;}
+</style>
+</head><body>
+<header>
+  <div class=brand>
+    <div class=logo>
+      <svg width="38" height="22" viewBox="0 0 38 22" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="vwGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <!-- Same stops as the wordmark — proportionate blue→green fade
+                 across each wave. Waves visually mirror the VWAVE transition. -->
+            <stop offset="0%"   stop-color="#2eb0e0"/>
+            <stop offset="35%"  stop-color="#2cd0c8"/>
+            <stop offset="65%"  stop-color="#28d488"/>
+            <stop offset="100%" stop-color="#22c55e"/>
+          </linearGradient>
+        </defs>
+        <!-- Three gentle waves, close together, deeper crests -->
+        <path d="M 1 4 Q 8 -2, 16 4 T 32 4"
+              fill="none" stroke="url(#vwGrad)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M 4 11 Q 10 5, 17 11 T 30 11"
+              fill="none" stroke="url(#vwGrad)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M 7 18 Q 12 12, 18 18 T 28 18"
+              fill="none" stroke="url(#vwGrad)" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <h1>VWAVE</h1>
+    </div>
+    <span class=tag>TickSense · Live Telemetry</span>
+  </div>
+  <div class=gen>Generated 2026-05-05 07:03:23 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
+</header>
+<nav><a href="index.html" class="">live</a><a href="last24h.html" class="active">last 24h</a><a href="references.html" class="">reference cases</a></nav>
+
+<section>
+  <h2>Triggered tickers · last 24 hours</h2>
+  <table>
+    <thead><tr><th>Ticker</th><th>First triggered (UTC)</th><th>Peak change</th><th>Peak RVol</th><th>Events</th><th>State now</th></tr></thead>
+    <tbody><tr><td class=sym>JLHL</td><td>05-04 19:02:59</td><td class=up>+59.7%</td><td>4.1x</td><td>315</td><td><span class="flag flag-good">active</span></td></tr><tr><td class=sym>PN</td><td>05-04 08:36:22</td><td class=up>+307.6%</td><td>5.0x</td><td>1030</td><td><span class="flag flag-warn">cooled</span></td></tr><tr><td class=sym>RLYB</td><td>05-04 08:05:40</td><td class=up>+49.7%</td><td>13.2x</td><td>3108</td><td><span class="flag flag-warn">cooled</span></td></tr></tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Event stream · last 24 hours</h2>
+  <p style="font-size:11px;color:var(--muted);margin-bottom:6px;">Every zone crossing TickSense emitted. Newest first. Capped at most recent 150 events.</p>
+  <table>
+    <thead><tr><th>Time (UTC)</th><th>Ticker</th><th>Event</th><th>Change</th><th>OBV</th><th>RVol</th></tr></thead>
+    <tbody><tr><td>05-04 19:29:08</td><td class=sym>GBTG</td><td class=down>COOLING</td><td class=up>+57.2%</td><td>BULLISH</td><td>0.0x</td></tr><tr><td>05-04 19:17:25</td><td class=sym>GBTG</td><td class=>ENTERED_ALERT</td><td class=up>+57.2%</td><td>BULLISH</td><td>11.1x</td></tr><tr><td>05-04 19:10:22</td><td class=sym>CRE</td><td class=>ENTERED_ALERT</td><td class=up>+91.1%</td><td>BULLISH</td><td>1.1x</td></tr><tr><td>05-04 19:09:55</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:40</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:25</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:10</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:54</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:26</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:26</td><td class=sym>CRE</td><td class=>ENTERED_ALERT</td><td class=up>+85.8%</td><td>BULLISH</td><td>2.1x</td></tr><tr><td>05-04 19:08:18</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:08:03</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:48</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:32</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:19</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:04:41</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+28.7%</td><td>BULLISH</td><td>4.1x</td></tr><tr><td>05-04 19:02:59</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+28.7%</td><td>BULLISH</td><td>4.1x</td></tr><tr><td>05-04 19:02:57</td><td class=sym>SSM</td><td class=>ENTERED_ALERT</td><td class=up>+55.8%</td><td>BULLISH</td><td>2.6x</td></tr><tr><td>05-04 12:11:18</td><td class=sym>CLNN</td><td class=>ENTERED_ALERT</td><td class=up>+16.8%</td><td>BULLISH</td><td>15.2x</td></tr><tr><td>05-04 12:11:18</td><td class=sym>RLYB</td><td class=>ENTERED_ALERT</td><td class=up>+27.5%</td><td>BULLISH</td><td>0.9x</td></tr><tr><td>05-04 08:52:54</td><td class=sym>RLYB</td><td class=down>COOLING</td><td class=up>+27.5%</td><td>BEARISH</td><td>3.4x</td></tr><tr><td>05-04 08:52:54</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.3x</td></tr><tr><td>05-04 08:51:24</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.3x</td></tr><tr><td>05-04 08:49:56</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:48:27</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:46:59</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:43:56</td><td class=sym>ADVB</td><td class=down>COOLING</td><td class=up>+31.5%</td><td>BEARISH</td><td>0.8x</td></tr><tr><td>05-04 08:42:44</td><td class=sym>RLYB</td><td class=up>ENTERED_TRIGGER</td><td class=up>+27.5%</td><td>BULLISH</td><td>7.5x</td></tr><tr><td>05-04 08:40:55</td><td class=sym>RLYB</td><td class=>ENTERED_ALERT</td><td class=up>+27.5%</td><td>BULLISH</td><td>8.0x</td></tr><tr><td>05-04 08:40:55</td><td class=sym>PN</td><td class=down>COOLING</td><td class=up>+288.8%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:40:32</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+288.8%</td><td>BULLISH</td><td>0.4x</td></tr><tr><td>05-04 08:38:23</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+289.6%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:38:16</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+284.1%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:36:22</td><td class=sym>PN</td><td class=up>ENTERED_TRIGGER</td><td class=up>+279.3%</td><td>BULLISH</td><td>1.7x</td></tr><tr><td>05-04 08:33:16</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+292.9%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:32:59</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+281.3%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:32:46</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+281.3%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:17:59</td><td class=sym>ADVB</td><td class=down>COOLING</td><td class=up>+31.5%</td><td>BEARISH</td><td>0.7x</td></tr><tr><td>05-04 08:16:36</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+269.9%</td><td>BEARISH</td><td>1.6x</td></tr><tr><td>05-04 08:16:29</td><td class=sym>RLYB</td><td class=down>COOLING</td><td class=up>+27.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 08:16:29</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+269.2%</td><td>BEARISH</td><td>1.6x</td></tr><tr><td>05-04 08:13:28</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+294.4%</td><td>BEARISH</td><td>1.5x</td></tr><tr><td>05-04 08:11:56</td><td class=sym>ADVB</td><td class=down>COOLING</td><td class=up>+31.5%</td><td>BEARISH</td><td>1.4x</td></tr><tr><td>05-04 08:11:56</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+307.6%</td><td>BEARISH</td><td>1.6x</td></tr><tr><td>05-04 08:10:10</td><td class=sym>RLYB</td><td class=>ENTERED_ALERT</td><td class=up>+27.5%</td><td>BULLISH</td><td>2.7x</td></tr><tr><td>05-04 08:10:10</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+55.5%</td><td>BULLISH</td><td>1.4x</td></tr><tr><td>05-04 08:08:36</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+263.3%</td><td>BEARISH</td><td>3.6x</td></tr><tr><td>05-04 08:05:40</td><td class=sym>RLYB</td><td class=up>ENTERED_TRIGGER</td><td class=up>+27.5%</td><td>BULLISH</td><td>3.6x</td></tr><tr><td>05-04 08:02:48</td><td class=sym>RLYB</td><td class=>ENTERED_ALERT</td><td class=up>+27.5%</td><td>BULLISH</td><td>0.5x</td></tr><tr><td>05-04 08:02:48</td><td class=sym>ADVB</td><td class=>ENTERED_ALERT</td><td class=up>+31.5%</td><td>BULLISH</td><td>6.1x</td></tr><tr><td>05-04 08:01:26</td><td class=sym>PN</td><td class=down>COOLING</td><td class=up>+175.9%</td><td>BEARISH</td><td>3.2x</td></tr><tr><td>05-04 08:01:26</td><td class=sym>STEX</td><td class=>ENTERED_ALERT</td><td class=up>+54.2%</td><td>BULLISH</td><td>19.8x</td></tr><tr><td>05-04 07:56:08</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+74.5%</td><td>BULLISH</td><td>5.0x</td></tr></tbody>
+  </table>
+</section>
+
+
+<footer>
+  <div>VWAVS Trading Technologies · TickSense</div>
+  <div class=disclaimer>
+    This page shows TickSense's signal stream — timestamped events emitted when a ticker exhibits eruption-class behavior. Every event is verifiable: pull the ticker on TradingView, check the timestamp, judge whether the chart confirms TickSense's read.<br><br>
+    No buy/sell recommendations. No P&L claims. No predictions. The volcano perceives; you decide.
+  </div>
+</footer>
+</body></html>
