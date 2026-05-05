@@ -13,35 +13,73 @@
 html{background:var(--bg);}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
      color:var(--fg);line-height:1.5;background:transparent;
-     position:relative;min-height:100vh;}
-/* Ghost volcano in the background — reinforces the metaphor without
-   dominating. Subtle silhouette, faint plume glow. Sits behind all content. */
-body::before{
-  content:"";position:fixed;left:0;right:0;bottom:0;height:75vh;
-  background:linear-gradient(180deg,
-    rgba(30,40,55,0) 0%,
-    rgba(30,40,55,0.18) 30%,
-    rgba(20,28,40,0.30) 65%,
-    rgba(8,12,20,0.42) 100%);
+     position:relative;min-height:100vh;overflow-x:hidden;}
+
+/* ── Volcano silhouette (background, behind all content) ────────────── */
+.volcano-body{
+  position:fixed;left:0;right:0;bottom:0;height:75vh;
+  background:linear-gradient(180deg,#2a3040 0%,#1a1f2e 55%,#080c14 100%);
   clip-path:polygon(0% 100%, 0% 92%, 30% 50%, 44% 28%, 50% 22%, 56% 28%, 70% 50%, 100% 92%, 100% 100%);
-  pointer-events:none;
-  z-index:0;
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* ── Plume rising from crater ───────────────────────────────────────── */
+.volcano-plume{
+  position:fixed;left:50%;bottom:54vh;
+  width:90px;height:32vh;
+  transform:translateX(-50%);
+  background:linear-gradient(0deg,
+    rgba(255,140,52,0.7) 0%,
+    rgba(255,110,40,0.42) 22%,
+    rgba(184,88,32,0.22) 48%,
+    rgba(120,55,20,0.08) 75%,
+    rgba(58,30,16,0) 100%);
+  border-radius:50% 50% 30% 30% / 70% 70% 40% 40%;
+  pointer-events:none;z-index:0;
+  filter:blur(7px);
+}
+
+/* ── Crater glow (the hot apex) ─────────────────────────────────────── */
+.volcano-crater-glow{
+  position:fixed;left:50%;bottom:54vh;
+  transform:translate(-50%,40%);
+  width:140px;height:26px;
+  background:radial-gradient(ellipse at 50% 50%,
+    rgba(255,180,70,0.9) 0%,
+    rgba(255,120,40,0.55) 35%,
+    rgba(184,80,28,0.18) 70%,
+    transparent 90%);
+  pointer-events:none;z-index:0;
   filter:blur(2px);
 }
-/* Subtle warm magma glow at the crater */
-body::after{
-  content:"";position:fixed;left:50%;bottom:54vh;
-  transform:translate(-50%,50%);
-  width:160px;height:32px;
-  background:radial-gradient(ellipse at 50% 50%,
-    rgba(255,140,52,0.08) 0%,
-    rgba(255,90,30,0.04) 40%,
-    transparent 75%);
-  pointer-events:none;
-  z-index:0;
-  filter:blur(3px);
+
+/* ── Lava rivers (asymmetric flow down slopes) ──────────────────────── */
+.lava-rivers{
+  position:fixed;top:46vh;left:50%;
+  transform:translateX(-50%);
+  width:64vw;height:46vh;
+  pointer-events:none;z-index:0;
 }
-/* Make sure all real content sits above the ghost volcano */
+.lava-rivers svg{width:100%;height:100%;display:block;overflow:visible;}
+.lava-river{
+  fill:none;stroke:#ff6820;stroke-width:2.6;stroke-linecap:round;
+  filter:drop-shadow(0 0 5px rgba(255,90,30,0.75)) drop-shadow(0 0 12px rgba(220,40,12,0.5));
+  opacity:0.8;
+}
+.lava-river-2{stroke:#ff7e3a;opacity:0.7;stroke-width:2.2;}
+.lava-river-3{stroke:#ff5818;opacity:0.65;stroke-width:1.8;}
+
+/* Faint ambient magma glow at the base */
+.volcano-base-glow{
+  position:fixed;bottom:0;left:0;right:0;height:240px;
+  background:radial-gradient(ellipse at 50% 100%,
+    rgba(255,126,46,0.10) 0%,
+    rgba(220,40,12,0.04) 35%,
+    transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* Make sure all real content sits above the volcano */
 header,nav,section,footer{position:relative;z-index:1;}
 header{padding:32px 40px;border-bottom:1px solid var(--line);
        background:linear-gradient(180deg,#0a0a10 0%,#06060a 100%);}
@@ -101,6 +139,23 @@ footer a{color:var(--accent);text-decoration:none;}
             line-height:1.6;max-width:780px;}
 </style>
 </head><body>
+<!-- Volcano background (silhouette + plume + lava rivers) -->
+<div class="volcano-body" aria-hidden="true"></div>
+<div class="volcano-plume" aria-hidden="true"></div>
+<div class="volcano-crater-glow" aria-hidden="true"></div>
+<div class="volcano-base-glow" aria-hidden="true"></div>
+<div class="lava-rivers" aria-hidden="true">
+  <svg viewBox="0 0 600 460" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">
+    <!-- Three asymmetric lava rivers flowing down from the crater.
+         Origin at top-center (300, 40), winding outward and downward. -->
+    <path class="lava-river"
+          d="M 300 40 Q 270 110, 240 170 Q 215 230, 195 290 Q 175 350, 165 430"/>
+    <path class="lava-river lava-river-2"
+          d="M 300 40 Q 320 100, 320 160 Q 320 220, 300 290 Q 285 360, 290 440"/>
+    <path class="lava-river lava-river-3"
+          d="M 300 40 Q 250 90, 215 140 Q 180 200, 150 270 Q 130 340, 115 420"/>
+  </svg>
+</div>
 <header>
   <div class=brand>
     <div class=logo>
@@ -127,7 +182,7 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
     <span class=tag>TickSense · Live Telemetry</span>
   </div>
-  <div class=gen>Generated 2026-05-05 08:21:48 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
+  <div class=gen>Generated 2026-05-05 08:24:09 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
 </header>
 <nav><a href="index.html" class="">live</a><a href="last24h.html" class="active">last 24h</a><a href="references.html" class="">reference cases</a></nav>
 
@@ -135,7 +190,7 @@ footer a{color:var(--accent);text-decoration:none;}
   <h2>Triggered tickers · last 24 hours</h2>
   <table>
     <thead><tr><th>Ticker</th><th>First triggered (UTC)</th><th>Peak change</th><th>Peak RVol</th><th>Events</th><th>State now</th></tr></thead>
-    <tbody><tr><td class=sym>JLHL</td><td>05-04 19:02:59</td><td class=up>+72.8%</td><td>4.1x</td><td>375</td><td><span class="flag flag-good">active</span></td></tr><tr><td class=sym>RLYB</td><td>05-04 08:42:44</td><td class=up>+49.7%</td><td>13.2x</td><td>2058</td><td><span class="flag flag-warn">cooled</span></td></tr><tr><td class=sym>PN</td><td>05-04 08:36:22</td><td class=up>+292.9%</td><td>1.8x</td><td>332</td><td><span class="flag flag-warn">cooled</span></td></tr></tbody>
+    <tbody><tr><td class=sym>JLHL</td><td>05-04 19:02:59</td><td class=up>+72.8%</td><td>4.1x</td><td>375</td><td><span class="flag flag-good">active</span></td></tr><tr><td class=sym>RLYB</td><td>05-04 08:42:44</td><td class=up>+49.7%</td><td>13.2x</td><td>1916</td><td><span class="flag flag-warn">cooled</span></td></tr><tr><td class=sym>PN</td><td>05-04 08:36:22</td><td class=up>+292.9%</td><td>1.8x</td><td>332</td><td><span class="flag flag-warn">cooled</span></td></tr></tbody>
   </table>
 </section>
 
@@ -144,7 +199,7 @@ footer a{color:var(--accent);text-decoration:none;}
   <p style="font-size:11px;color:var(--muted);margin-bottom:6px;">Every zone crossing TickSense emitted. Newest first. Capped at most recent 150 events.</p>
   <table>
     <thead><tr><th>Time (UTC)</th><th>Ticker</th><th>Event</th><th>Change</th><th>OBV</th><th>RVol</th></tr></thead>
-    <tbody><tr><td>05-05 08:15:52</td><td class=sym>MASK</td><td class=>ENTERED_ALERT</td><td class=up>+56.6%</td><td>BULLISH</td><td>1.0x</td></tr><tr><td>05-05 08:14:53</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>65.8x</td></tr><tr><td>05-05 08:14:39</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>65.8x</td></tr><tr><td>05-05 08:14:24</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>65.8x</td></tr><tr><td>05-05 08:14:09</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:13:54</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:13:40</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:13:25</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:13:09</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:11:09</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:10:52</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:10:39</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:10:24</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:10:11</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:09:53</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:09:43</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:06:45</td><td class=sym>MASK</td><td class=>ENTERED_ALERT</td><td class=up>+56.6%</td><td>BULLISH</td><td>1.7x</td></tr><tr><td>05-04 19:29:08</td><td class=sym>GBTG</td><td class=down>COOLING</td><td class=up>+57.2%</td><td>BULLISH</td><td>0.0x</td></tr><tr><td>05-04 19:17:25</td><td class=sym>GBTG</td><td class=>ENTERED_ALERT</td><td class=up>+57.2%</td><td>BULLISH</td><td>11.1x</td></tr><tr><td>05-04 19:10:22</td><td class=sym>CRE</td><td class=>ENTERED_ALERT</td><td class=up>+91.1%</td><td>BULLISH</td><td>1.1x</td></tr><tr><td>05-04 19:09:55</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:40</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:25</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:10</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:54</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:26</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:26</td><td class=sym>CRE</td><td class=>ENTERED_ALERT</td><td class=up>+85.8%</td><td>BULLISH</td><td>2.1x</td></tr><tr><td>05-04 19:08:18</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:08:03</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:48</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:32</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:19</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:04:41</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+28.7%</td><td>BULLISH</td><td>4.1x</td></tr><tr><td>05-04 19:02:59</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+28.7%</td><td>BULLISH</td><td>4.1x</td></tr><tr><td>05-04 19:02:57</td><td class=sym>SSM</td><td class=>ENTERED_ALERT</td><td class=up>+55.8%</td><td>BULLISH</td><td>2.6x</td></tr><tr><td>05-04 12:11:18</td><td class=sym>CLNN</td><td class=>ENTERED_ALERT</td><td class=up>+16.8%</td><td>BULLISH</td><td>15.2x</td></tr><tr><td>05-04 12:11:18</td><td class=sym>RLYB</td><td class=>ENTERED_ALERT</td><td class=up>+27.5%</td><td>BULLISH</td><td>0.9x</td></tr><tr><td>05-04 08:52:54</td><td class=sym>RLYB</td><td class=down>COOLING</td><td class=up>+27.5%</td><td>BEARISH</td><td>3.4x</td></tr><tr><td>05-04 08:52:54</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.3x</td></tr><tr><td>05-04 08:51:24</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.3x</td></tr><tr><td>05-04 08:49:56</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:48:27</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:46:59</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:43:56</td><td class=sym>ADVB</td><td class=down>COOLING</td><td class=up>+31.5%</td><td>BEARISH</td><td>0.8x</td></tr><tr><td>05-04 08:42:44</td><td class=sym>RLYB</td><td class=up>ENTERED_TRIGGER</td><td class=up>+27.5%</td><td>BULLISH</td><td>7.5x</td></tr><tr><td>05-04 08:40:55</td><td class=sym>RLYB</td><td class=>ENTERED_ALERT</td><td class=up>+27.5%</td><td>BULLISH</td><td>8.0x</td></tr><tr><td>05-04 08:40:55</td><td class=sym>PN</td><td class=down>COOLING</td><td class=up>+288.8%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:40:32</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+288.8%</td><td>BULLISH</td><td>0.4x</td></tr><tr><td>05-04 08:38:23</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+289.6%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:38:16</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+284.1%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:36:22</td><td class=sym>PN</td><td class=up>ENTERED_TRIGGER</td><td class=up>+279.3%</td><td>BULLISH</td><td>1.7x</td></tr><tr><td>05-04 08:33:16</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+292.9%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:32:59</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+281.3%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:32:46</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+281.3%</td><td>BULLISH</td><td>0.6x</td></tr></tbody>
+    <tbody><tr><td>05-05 08:22:00</td><td class=sym>MASK</td><td class=down>COOLING</td><td class=up>+56.6%</td><td>BEARISH</td><td>0.6x</td></tr><tr><td>05-05 08:15:52</td><td class=sym>MASK</td><td class=>ENTERED_ALERT</td><td class=up>+56.6%</td><td>BULLISH</td><td>1.0x</td></tr><tr><td>05-05 08:14:53</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>65.8x</td></tr><tr><td>05-05 08:14:39</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>65.8x</td></tr><tr><td>05-05 08:14:24</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>65.8x</td></tr><tr><td>05-05 08:14:09</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:13:54</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:13:40</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:13:25</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:13:09</td><td class=sym>VEEE</td><td class=>ENTERED_ALERT</td><td class=up>+31.6%</td><td>BULLISH</td><td>39.8x</td></tr><tr><td>05-05 08:11:09</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:10:52</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:10:39</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:10:24</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:10:11</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:09:53</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:09:43</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+72.8%</td><td>BULLISH</td><td>2.3x</td></tr><tr><td>05-05 08:06:45</td><td class=sym>MASK</td><td class=>ENTERED_ALERT</td><td class=up>+56.6%</td><td>BULLISH</td><td>1.7x</td></tr><tr><td>05-04 19:29:08</td><td class=sym>GBTG</td><td class=down>COOLING</td><td class=up>+57.2%</td><td>BULLISH</td><td>0.0x</td></tr><tr><td>05-04 19:17:25</td><td class=sym>GBTG</td><td class=>ENTERED_ALERT</td><td class=up>+57.2%</td><td>BULLISH</td><td>11.1x</td></tr><tr><td>05-04 19:10:22</td><td class=sym>CRE</td><td class=>ENTERED_ALERT</td><td class=up>+91.1%</td><td>BULLISH</td><td>1.1x</td></tr><tr><td>05-04 19:09:55</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:40</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:25</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:09:10</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:54</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:26</td><td class=sym>JLHL</td><td class=>ENTERED_ALERT</td><td class=up>+56.5%</td><td>BULLISH</td><td>0.2x</td></tr><tr><td>05-04 19:08:26</td><td class=sym>CRE</td><td class=>ENTERED_ALERT</td><td class=up>+85.8%</td><td>BULLISH</td><td>2.1x</td></tr><tr><td>05-04 19:08:18</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:08:03</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:48</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:32</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:07:19</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+49.3%</td><td>BULLISH</td><td>1.3x</td></tr><tr><td>05-04 19:04:41</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+28.7%</td><td>BULLISH</td><td>4.1x</td></tr><tr><td>05-04 19:02:59</td><td class=sym>JLHL</td><td class=up>ENTERED_TRIGGER</td><td class=up>+28.7%</td><td>BULLISH</td><td>4.1x</td></tr><tr><td>05-04 19:02:57</td><td class=sym>SSM</td><td class=>ENTERED_ALERT</td><td class=up>+55.8%</td><td>BULLISH</td><td>2.6x</td></tr><tr><td>05-04 12:11:18</td><td class=sym>CLNN</td><td class=>ENTERED_ALERT</td><td class=up>+16.8%</td><td>BULLISH</td><td>15.2x</td></tr><tr><td>05-04 12:11:18</td><td class=sym>RLYB</td><td class=>ENTERED_ALERT</td><td class=up>+27.5%</td><td>BULLISH</td><td>0.9x</td></tr><tr><td>05-04 08:52:54</td><td class=sym>RLYB</td><td class=down>COOLING</td><td class=up>+27.5%</td><td>BEARISH</td><td>3.4x</td></tr><tr><td>05-04 08:52:54</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.3x</td></tr><tr><td>05-04 08:51:24</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.3x</td></tr><tr><td>05-04 08:49:56</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:48:27</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:46:59</td><td class=sym>STEX</td><td class=down>COOLING</td><td class=up>+59.4%</td><td>BULLISH</td><td>0.1x</td></tr><tr><td>05-04 08:43:56</td><td class=sym>ADVB</td><td class=down>COOLING</td><td class=up>+31.5%</td><td>BEARISH</td><td>0.8x</td></tr><tr><td>05-04 08:42:44</td><td class=sym>RLYB</td><td class=up>ENTERED_TRIGGER</td><td class=up>+27.5%</td><td>BULLISH</td><td>7.5x</td></tr><tr><td>05-04 08:40:55</td><td class=sym>RLYB</td><td class=>ENTERED_ALERT</td><td class=up>+27.5%</td><td>BULLISH</td><td>8.0x</td></tr><tr><td>05-04 08:40:55</td><td class=sym>PN</td><td class=down>COOLING</td><td class=up>+288.8%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:40:32</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+288.8%</td><td>BULLISH</td><td>0.4x</td></tr><tr><td>05-04 08:38:23</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+289.6%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:38:16</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+284.1%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:36:22</td><td class=sym>PN</td><td class=up>ENTERED_TRIGGER</td><td class=up>+279.3%</td><td>BULLISH</td><td>1.7x</td></tr><tr><td>05-04 08:33:16</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+292.9%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:32:59</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+281.3%</td><td>BULLISH</td><td>0.6x</td></tr><tr><td>05-04 08:32:46</td><td class=sym>PN</td><td class=>ENTERED_ALERT</td><td class=up>+281.3%</td><td>BULLISH</td><td>0.6x</td></tr></tbody>
   </table>
 </section>
 
