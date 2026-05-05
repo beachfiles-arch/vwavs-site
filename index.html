@@ -166,21 +166,46 @@ footer a{color:var(--accent);text-decoration:none;}
             line-height:1.6;max-width:780px;}
 </style>
 </head><body>
-<!-- Volcano background (silhouette + plume + lava rivers) -->
-<div class="volcano-body" aria-hidden="true"></div>
-<div class="volcano-plume" aria-hidden="true"></div>
-<div class="volcano-crater-glow" aria-hidden="true"></div>
-<div class="volcano-base-glow" aria-hidden="true"></div>
-<div class="lava-rivers" aria-hidden="true">
-  <svg viewBox="0 0 600 460" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">
-    <!-- Three asymmetric lava rivers flowing down from the crater.
-         Origin at top-center (300, 40), winding outward and downward. -->
-    <path class="lava-river"
-          d="M 300 40 Q 270 110, 240 170 Q 215 230, 195 290 Q 175 350, 165 430"/>
-    <path class="lava-river lava-river-2"
-          d="M 300 40 Q 320 100, 320 160 Q 320 220, 300 290 Q 285 360, 290 440"/>
-    <path class="lava-river lava-river-3"
-          d="M 300 40 Q 250 90, 215 140 Q 180 200, 150 270 Q 130 340, 115 420"/>
+<!-- Ghost volcano — silhouette + plume + lava rivers. Atmospheric backdrop.
+     Wrapped in .ghost-volcano which applies opacity+blur to the whole scene. -->
+<div class="ghost-volcano" aria-hidden="true">
+  <div class="volcano-body"></div>
+  <div class="lava-rivers">
+    <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lavaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#ffb450" stop-opacity="1"/>
+          <stop offset="20%"  stop-color="#ff7028" stop-opacity="0.95"/>
+          <stop offset="50%"  stop-color="#dc501e" stop-opacity="0.6"/>
+          <stop offset="80%"  stop-color="#8c3714" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#3a1e10" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Dominant main flow — breaches west side of crater, fans far left. -->
+      <path class="lava-river lava-river-1"
+            d="M 302 0 C 288 30, 268 50, 264 92 C 264 138, 228 162, 206 208 C 184 252, 162 292, 146 338 C 136 365, 128 388, 122 408"
+            stroke="url(#lavaGrad)" stroke-width="11" stroke-linecap="round" fill="none"/>
+      <!-- Branch off main flow -->
+      <path class="lava-river lava-river-2"
+            d="M 264 92 C 250 116, 240 138, 234 168 C 230 196, 234 220, 234 250 C 232 274, 226 296, 222 318"
+            stroke="url(#lavaGrad)" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.62"/>
+      <!-- Side-vent left — secondary fissure -->
+      <path class="lava-river lava-river-3"
+            d="M 252 70 C 234 90, 220 116, 210 146 C 198 178, 190 206, 186 238 C 184 266, 184 290, 182 316"
+            stroke="url(#lavaGrad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.78"/>
+    </svg>
+  </div>
+  <div class="volcano-crater-glow"></div>
+  <div class="volcano-plume"></div>
+</div>
+<div class="base-magma-glow" aria-hidden="true"></div>
+
+<!-- Candlestick chart overlay — eruption made literal.
+     Animated reveal of 4 candles (3 green pole + 1 red rug pull). -->
+<div class="chart-overlay" aria-hidden="true">
+  <svg id="candleSvg" viewBox="0 0 1000 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="candles"></g>
+    <circle id="apexFlash" class="apex-flash" cx="478" cy="88" r="10"/>
   </svg>
 </div>
 <header>
@@ -209,7 +234,7 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
     <span class=tag>TickSense · Live Telemetry</span>
   </div>
-  <div class=gen>Generated 2026-05-05 08:48:02 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
+  <div class=gen>Generated 2026-05-05 08:49:29 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
 </header>
 <nav><a href="index.html" class="active">live</a><a href="last24h.html" class="">last 24h</a><a href="references.html" class="">reference cases</a></nav>
 
@@ -230,7 +255,7 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
     <div class=card>
       <div class=label>Total events</div>
-      <div class=val>15,419</div>
+      <div class=val>15,080</div>
       <div class=sub>telemetry state changes monitored</div>
     </div>
   </div>
@@ -252,4 +277,84 @@ footer a{color:var(--accent);text-decoration:none;}
     No buy/sell recommendations. No P&L claims. No predictions. The volcano perceives; you decide.
   </div>
 </footer>
+<script>
+// Candlestick eruption animation — 4 candles (3 green pole + 1 red rug pull).
+// Reveal over 5.5s, hold 3.5s, fade, restart. Atmospheric — runs continuously.
+const CANDLES = [
+  null, null, null, null, null, null,
+  null, null, null, null, null, null,
+  [520, 380, 372, 535],
+  [380, 200, 192, 392],
+  [200,  90,  82, 210],
+  [ 90, 282,  78, 302],
+  null,
+  null, null, null, null, null,
+  null, null, null, null, null, null, null, null
+];
+const HOT_RANGE = [12, 14];
+const APEX_INDEX = 14;
+(function(){
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const g = document.getElementById('candles');
+  const apex = document.getElementById('apexFlash');
+  if (!g || !apex) return;
+  const N = CANDLES.length;
+  const totalW = 1000;
+  const margin = 30;
+  const step = (totalW - 2*margin) / (N - 1);
+  const bodyW = step * 0.62;
+  const elements = [];
+  CANDLES.forEach((d, i) => {
+    if (!d) { elements.push(null); return; }
+    const [o, c, h, l] = d;
+    const x = margin + i * step;
+    const isBull = c < o;
+    const cls = isBull ? 'bull' : 'bear';
+    const hot = (i >= HOT_RANGE[0] && i <= HOT_RANGE[1]);
+    const wick = document.createElementNS(SVG_NS, 'line');
+    wick.setAttribute('x1', x); wick.setAttribute('x2', x);
+    wick.setAttribute('y1', h); wick.setAttribute('y2', l);
+    wick.setAttribute('class', 'wick-' + cls + (hot ? ' wick-hot' : ''));
+    wick.style.opacity = 0;
+    g.appendChild(wick);
+    const body = document.createElementNS(SVG_NS, 'rect');
+    const top = Math.min(o, c);
+    const ht = Math.max(Math.abs(c - o), 2);
+    body.setAttribute('x', x - bodyW/2);
+    body.setAttribute('y', top);
+    body.setAttribute('width', bodyW);
+    body.setAttribute('height', ht);
+    body.setAttribute('class', 'candle-' + cls + (hot ? ' candle-hot' : ''));
+    body.style.opacity = 0;
+    g.appendChild(body);
+    elements.push({wick, body});
+    if (i === APEX_INDEX) { apex.setAttribute('cx', x); apex.setAttribute('cy', h); }
+  });
+  const cycle = 11000, reveal = 5500, hold = 3500, fade = 1000;
+  const apexAt = (APEX_INDEX / (N - 1)) * reveal;
+  const apexDur = 700;
+  function tick(t) {
+    const phase = t % cycle;
+    for (let i = 0; i < N; i++) {
+      const appearAt = (i / (N - 1)) * reveal;
+      let op;
+      if (phase < appearAt) op = 0;
+      else if (phase < reveal + hold) op = 1;
+      else if (phase < reveal + hold + fade) op = 1 - (phase - reveal - hold) / fade;
+      else op = 0;
+      if (!elements[i]) continue;
+      elements[i].wick.style.opacity = op;
+      elements[i].body.style.opacity = op;
+    }
+    let apexOp = 0;
+    if (phase >= apexAt && phase < apexAt + apexDur) {
+      const tn = (phase - apexAt) / apexDur;
+      apexOp = tn < 0.2 ? (tn / 0.2) : (1 - (tn - 0.2) / 0.8);
+    }
+    apex.style.opacity = apexOp;
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
 </body></html>
