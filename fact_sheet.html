@@ -237,52 +237,112 @@ footer a{color:var(--accent);text-decoration:none;}
   </div>
   <div class=gen>Generated 2026-05-18 04:58:40 UTC · refreshes every 5 minutes · all timestamps verifiable against any free chart</div>
 </header>
-<nav><a href="index.html" class="active">live</a><a href="last24h.html" class="">last 24h</a><a href="references.html" class="">reference cases</a><a href="contact.html" class="">contact</a></nav>
+<nav><a href="index.html" class="">live</a><a href="last24h.html" class="">last 24h</a><a href="references.html" class="">reference cases</a><a href="contact.html" class="">contact</a></nav>
 
 <section>
-  <p class=lead>The volcano watches. Equity eruptions — sudden directional moves with the volume and conviction of real institutional flow — get surfaced as they happen, with fakes labeled and stood down from. On the other side of the surface, a set of specialist responders act on what the eruption reveals. This page is the handoff. Detection on one side, response on the other, running in public.</p>
-  <p class=lead>No backtests. No claims. Every event below has a timestamp; verify it against any chart.</p>
+  <h2>VWAVS — Fact Sheet</h2>
+  <p class=lead>What this site is, what it shows, and how to use it. Written plainly so a visitor can decide in two minutes whether to keep watching.</p>
 
-  <div class=cards>
-    <div class=card>
-      <div class=label>Eruptions surfaced · 24h</div>
-      <div class=val>0</div>
-      <div class=sub>tickers crossed into eruption zone</div>
-    </div>
-    <div class=card>
-      <div class=label>Responder activity · 24h</div>
-      <div class=val>0</div>
-      <div class=sub><span class="up">0</span> open · <span class="muted">0</span> closed</div>
-    </div>
-    <div class=card>
-      <div class=label>Stood down from · 24h</div>
-      <div class=val>0</div>
-      <div class=sub>flagged incoherent / back-side / fading</div>
-    </div>
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">What VWAVS is</h3>
+  <p>VWAVS is a real-time monitoring system for small-cap equity moves. It watches the market continuously for <strong>eruptions</strong> &mdash; sudden directional moves backed by the volume and conviction of real institutional flow &mdash; and routes those detections to a set of specialist <strong>responders</strong> that decide whether to act. The website is the public face of that system, running in the open.</p>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">What the website shows</h3>
+  <p>Three things, presented as they happen:</p>
+  <ol style="padding-left:22px;line-height:1.8;">
+    <li><strong>Eruptions surfaced</strong> &mdash; tickers crossing into the eruption zone, with timestamp, direction, and a label for whether the move is healthy or showing signs of exhaustion (back-side, fading, incoherent).</li>
+    <li><strong>Responder activity</strong> &mdash; when a specialist responder enters or exits a position, the row shows ticker, entry price, hold time, P&amp;L, and current state.</li>
+    <li><strong>The handoff between the two</strong> &mdash; every responder row has a marker showing whether the eruption layer flagged the same ticker in the same window. That marker is the architecture made visible.</li>
+  </ol>
+  <p>Every row carries a timestamp. The reader can verify any event against any free chart service.</p>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">What the website does NOT do</h3>
+  <ul style="padding-left:22px;line-height:1.8;">
+    <li>Make P&amp;L claims</li>
+    <li>Show backtest results</li>
+    <li>Sell anything</li>
+    <li>Require a subscription, account, or email</li>
+    <li>Recommend trades</li>
+    <li>Advertise</li>
+  </ul>
+  <p>The page is a demonstration, not a sales page. A visitor either sees something meaningful in the activity or doesn't. There's no further ask.</p>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">How to use it</h3>
+  <p>Visit. Watch. Verify any timestamp against any chart. Come back another day. Watch again.</p>
+  <p>The page auto-refreshes every 5 minutes. Activity accumulates over the trading day; on weekends and overnight, it shows the most recent active window.</p>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">The responders</h3>
+  <p>Each responder is a specialist &mdash; built for a specific kind of move, with its own discipline for entries and exits. The system runs multiple responders simultaneously because no single rule wins on every kind of equity behavior. Letting specialists disagree, and watching which one is right on which kind of move, is part of how the system works.</p>
+  <p>Current responders (named publicly on the site as they fire):</p>
+  <ul style="padding-left:22px;line-height:1.8;">
+    <li><strong>Tenacity A / B / (paper)</strong> &mdash; the original responders, built on patience and structural discipline</li>
+    <li><strong>Renko / Renko Pure / Trend</strong> &mdash; substrate-pure responders for distinct chart shapes</li>
+    <li><strong>Velocity</strong> &mdash; continuity-driven, for sustained directional flow</li>
+  </ul>
+  <p>Internal architecture is intentionally not detailed on the public page. What's visible is what each responder did, when, and with what outcome.</p>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">Verification</h3>
+  <p>Every event the site shows has a timestamp (UTC), a ticker symbol, a price, and an outcome. Any of these can be verified against TradingView, Webull, or any free chart. If the timestamp shows the eruption layer flagged a ticker at 10:14, and the chart shows that ticker erupting at 10:14, the eye saw it. If a responder entered at 10:14:08, the entry is independently verifiable from time-and-sales.</p>
+  <p>There's no way to fake a live page with a continuously verifiable timestamp stream. That's the credibility model.</p>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">What's proprietary</h3>
+  <p>The site shows the outcomes. It does not show the substrate (how price is internally represented), the entry rules, the threshold values, the phase logic, the filtering layers, the grading math, or any parameters. The architecture is conveyed conceptually. The mechanism stays with the apparatus.</p>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">Frequently observed questions</h3>
+  <div style="background:var(--card);padding:18px 22px;border-radius:6px;border:1px solid var(--line);margin-bottom:14px;">
+    <strong>Are these real trades?</strong><br>
+    Real shadow trades &mdash; the responders evaluate every entry and exit against live market data as if they were trading, and the outcomes shown reflect what would have happened on those entries/exits. The system is in a public-validation phase prior to live capital deployment.
   </div>
+  <div style="background:var(--card);padding:18px 22px;border-radius:6px;border:1px solid var(--line);margin-bottom:14px;">
+    <strong>Why show losses?</strong><br>
+    Showing only wins would be marketing. Showing wins AND losses is how a system establishes that it's a system, not a curated stream of highlights. Anyone watching for a few sessions will see both.
+  </div>
+  <div style="background:var(--card);padding:18px 22px;border-radius:6px;border:1px solid var(--line);margin-bottom:14px;">
+    <strong>Why so many responders?</strong><br>
+    Different kinds of equity moves reward different kinds of patience. A responder that wins on sustained climbers will whipsaw on choppy peakers. Running multiple specialists is the system's answer to "no single rule works on everything."
+  </div>
+  <div style="background:var(--card);padding:18px 22px;border-radius:6px;border:1px solid var(--line);margin-bottom:14px;">
+    <strong>Is this for trading or for watching?</strong><br>
+    For watching. The site is a demonstration of the apparatus, not a tool. The responders run for the operator's own paper validation; the public surface exists so anyone can verify what the system does.
+  </div>
+  <div style="background:var(--card);padding:18px 22px;border-radius:6px;border:1px solid var(--line);margin-bottom:14px;">
+    <strong>Can I get the signals?</strong><br>
+    Not currently. The site is a public-validation phase. The signals are not yet distributed.
+  </div>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">Architecture (at the visible level)</h3>
+  <pre style="background:var(--card);padding:20px;border-radius:6px;border:1px solid var(--line);font-family:'SF Mono',Menlo,monospace;font-size:11px;color:var(--cool);overflow-x:auto;line-height:1.5;">
+                    &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+                    &#9474;   Equity universe       &#9474;
+                    &#9474;   (small-cap, US)       &#9474;
+                    &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9474;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+                                   &#9474;
+                                   &#9660;
+                    &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+                    &#9474;  Eruption detection     &#9474;
+                    &#9474;  ("the volcano")        &#9474;
+                    &#9474;  Continuous, agnostic   &#9474;
+                    &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9474;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+                                   &#9474; surfaces
+                                   &#9660;
+            &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+            &#9474;  Specialist responders               &#9474;
+            &#9474;  Each acts on its own rule           &#9474;
+            &#9474;  Each exits on its own rule          &#9474;
+            &#9474;  They can disagree (by design)       &#9474;
+            &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9474;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+                       &#9474; outcomes
+                       &#9660;
+                    &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+                    &#9474;   Public site           &#9474;
+                    &#9474;   (this domain)         &#9474;
+                    &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+  </pre>
+  <p style="font-size:13px;color:var(--muted);">What's shown publicly is the bottom row, with provenance markers (&#10003; / &mdash;) connecting back to the layer above.</p>
+
+  <h3 style="margin-top:32px;font-size:18px;color:var(--accent);">Operator note</h3>
+  <p>The system is operated by a single individual in active development. The website is auto-generated from the system's running logs every 5 minutes. The volcano metaphor is operational shorthand for the perception layer's job: surface what's about to erupt, label what's already done. The "responders" are technical bots, named publicly to avoid the connotations of high-frequency trading or algorithmic black boxes &mdash; these are patient, structurally disciplined position-takers, not scalpers.</p>
 </section>
 
-<section>
-  <h2>Live response · last 24 hours</h2>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:14px;">
-    Each row is a specialist responder reacting to what the volcano surfaced. The <span style="color:var(--accent);">✓</span> column marks tickers the eruption layer flagged in the same window — the handoff in motion. Page updates every 5 minutes.
-  </p>
-  <table>
-    <thead><tr><th>Time</th><th>Ticker</th><th>Surfaced</th><th>Responder</th><th>Entry</th><th>Held</th><th>P&amp;L</th><th>State</th></tr></thead>
-    <tbody><tr><td colspan="8" style="padding:20px;color:var(--muted);text-align:center;">No bot activity in the last 24 hours — markets may be closed.</td></tr></tbody>
-  </table>
-</section>
-
-<section>
-  <h2>Recent eruptions · last 12 hours</h2>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:14px;">
-    What the eruption layer surfaced, before any responder decided to act. This is the universe the responders above were drawing from.
-  </p>
-  <table>
-    <thead><tr><th>Ticker</th><th>First triggered</th><th>Change</th><th>OBV</th><th>RVol</th><th>State now</th></tr></thead>
-    <tbody><tr><td colspan="6" style="padding:20px;color:var(--muted);text-align:center;">No ENTERED_TRIGGER events in the last 12 hours.</td></tr></tbody>
-  </table>
-</section>
 
 
 <footer>
